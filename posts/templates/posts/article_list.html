@@ -1,0 +1,41 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h1>Article List</h1><i class="btn"style="float:right; background:#9994"><a href="{% url 'article_create' %}"> Add  </a></i> 
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Article Name</th>
+      <th scope="col">Author</th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  {% if article_list %}
+  <tbody>
+    {% for article in article_list %}
+    <tr>
+      <th scope="row"> * </th>
+	  
+      <td><a href="{{ article.get_absolute_url }}">{{ article.title }}</a> </td>
+	  
+      <td>{{article.author.first_name}} {{article.author.last_name}}</td>
+	  {% if request.user.is_staff %}
+      <td>
+		<i><a href="{% url 'article_update' article.id%}"> update </a></i> |
+		<i><a href="{% url 'article_delete' article.id%}"> delete </a></i>
+	   </td>
+	   {% endif %}
+    </tr>
+    {% endfor %}
+
+  </tbody>
+  {% else %}
+    <p>There is no Article Present.</p>
+  {% endif %}  
+  
+</table>
+  
+  
+     
+{% endblock %}
